@@ -1,0 +1,28 @@
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\bin\Debug\LedParser.exe.config
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\bin\Debug\LedParser.exe
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\bin\Debug\LedParser.pdb
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\obj\Debug\LedParser.csprojResolveAssemblyReference.cache
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\obj\Debug\LedParser.LedParser.resources
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\obj\Debug\LedParser.Properties.Resources.resources
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\obj\Debug\LedParser.csproj.GenerateResource.Cache
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\obj\Debug\LedParser.exe
+c:\users\shumkin_d\Мои документы\Visual Studio 2008\Projects\LedParser\LedParser\obj\Debug\LedParser.pdb
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\bin\Debug\LedParser.exe.config
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.exe
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.pdb
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.csprojResolveAssemblyReference.cache
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.LedParser.resources
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.Properties.Resources.resources
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.csproj.GenerateResource.Cache
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\bin\Debug\LedParser.exe
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\bin\Debug\LedParser.pdb
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\bin\Debug\LedParser.exe.config
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.exe
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.pdb
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\bin\Debug\LedParser.exe
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\bin\Debug\LedParser.pdb
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.csprojResolveAssemblyReference.cache
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.LedParser.resources
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.Properties.Resources.resources
+C:\Users\shumkin_d\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.csproj.GenerateResource.Cache
+C:\Users\Cratu\Google Диск\LedController\LedParser\LedParser\obj\Debug\LedParser.NewProgramm.resources

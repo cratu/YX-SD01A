@@ -2,15 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LedParser
 {
+    public enum Format
+    {
+        SD01A,
+        SD01B
+    }
+
     //Format B??
     public class FileParser : IEnumerable<IList<Color>>, IEnumerator<IList<Color>>, ICloneable
     {
+        private Format? format { get; set; } = null;
         /// <summary>
         /// length of header. Must Be!
         /// </summary>
@@ -52,7 +56,15 @@ namespace LedParser
         private void InitFromData(byte[] data)
         {
             _data = data;
-            if (!(data.Length > headerLength && data[2] == 0x68 && data[3] == 0x03 && data[4] == 0x06 && data[5] == 0x06 && data[6] == 0x55 && data[headerLength - 1] == 0x55))
+            if ((data.Length > headerLength && data[2] == 0x68 && data[3] == 0x03 && data[4] == 0x06 && data[5] == 0x06 && data[6] == 0x55 && data[headerLength - 1] == 0x55))
+            {
+                format = Format.SD01A;
+            }
+            if ((data.Length > headerLength && data[2] == 0x98 && data[3] == 0x13 && data[4] == 0x06 && data[5] == 0x14 && data[6] == 0x55 && data[headerLength - 1] == 0x55))
+            {
+                format = Format.SD01B;
+            }
+            if(format == null)
                 throw new Exception("Unknown file format");
             NumberOfFrames = (data[0] << 8) + data[1];
             FrameLength = (data.Length - headerLength) / NumberOfFrames / 3;
@@ -73,8 +85,9 @@ namespace LedParser
         /// <param name="frames">Number of frames</param>
         /// <param name="fillColor">initial color</param>
         /// <param name="frameLength">number of diodes in frame.</param>
-        public FileParser(int frames, Color fillColor, int frameLength = 1024)
+        public FileParser(int frames, Color fillColor, int frameLength = 1024, Format f = Format.SD01A)
         {
+            format = f;
             if (frames < 0 || frames > 65535)
                 throw new NotSupportedException("Frames parameter mest be not negative and greater than 65535");
             var data = new byte[headerLength + frameLength * frames * 3];
@@ -89,9 +102,22 @@ namespace LedParser
             for (int i = 0; i < frames * frameLength; i++)
             {
                 Color color = (i % frameLength)< diodeMax ? fillColor : Color.Black;
-                data[headerLength + i * 3 + 1] = ByteReverse.ReverseWithLookupTable((byte)color.R);
-                data[headerLength + i * 3 + 2] = ByteReverse.ReverseWithLookupTable((byte)color.G);
-                data[headerLength + i * 3 + 0] = ByteReverse.ReverseWithLookupTable((byte)color.B);
+
+                switch (format)
+                {
+                    case Format.SD01A:
+                        data[headerLength + i * 3 + 1] = ByteReverse.ReverseWithLookupTable((byte)color.R);
+                        data[headerLength + i * 3 + 2] = ByteReverse.ReverseWithLookupTable((byte)color.G);
+                        data[headerLength + i * 3 + 0] = ByteReverse.ReverseWithLookupTable((byte)color.B);
+                        break;
+                    case Format.SD01B:
+                        data[headerLength + i * 3 + 1] = (byte)color.R;
+                        data[headerLength + i * 3 + 2] = (byte)color.G;
+                        data[headerLength + i * 3 + 0] = (byte)color.B;
+                        break;
+                }
+
+                
             }
 
             InitFromData(data);
@@ -111,9 +137,20 @@ namespace LedParser
                 throw new IndexOutOfRangeException();
 
             int offset = headerLength + frame * FrameLength * 3;
-            _data[offset + diode * 3 + 1] = ByteReverse.ReverseWithLookupTable((byte)color.R);
-            _data[offset + diode * 3 + 2] = ByteReverse.ReverseWithLookupTable((byte)color.G);
-            _data[offset + diode * 3 + 0] = ByteReverse.ReverseWithLookupTable((byte)color.B);
+            switch (format)
+            {
+                case Format.SD01A:
+                    _data[offset + diode * 3 + 1] = ByteReverse.ReverseWithLookupTable((byte)color.R);
+                    _data[offset + diode * 3 + 2] = ByteReverse.ReverseWithLookupTable((byte)color.G);
+                    _data[offset + diode * 3 + 0] = ByteReverse.ReverseWithLookupTable((byte)color.B);
+                    break;
+                case Format.SD01B:
+                    _data[offset + diode * 3 + 1] = (byte)color.R;
+                    _data[offset + diode * 3 + 2] = (byte)color.G;
+                    _data[offset + diode * 3 + 0] = (byte)color.B;
+                    break;
+            }
+
 
         }
 
@@ -153,11 +190,23 @@ namespace LedParser
             int offset = headerLength + i * FrameLength * 3; 
             for(int j = 0; j < FrameLength; j++)
             {
-                retVal.Add(Color.FromArgb(
-                    ByteReverse.ReverseWithLookupTable(_data[offset + j * 3 + 1]), 
-                    ByteReverse.ReverseWithLookupTable(_data[offset + j * 3 + 2]), 
-                    ByteReverse.ReverseWithLookupTable(_data[offset + j * 3 + 0])
-                    ));
+                switch (format)
+                {
+                    case Format.SD01A:
+                        retVal.Add(Color.FromArgb(
+                            ByteReverse.ReverseWithLookupTable(_data[offset + j * 3 + 1]),
+                            ByteReverse.ReverseWithLookupTable(_data[offset + j * 3 + 2]),
+                            ByteReverse.ReverseWithLookupTable(_data[offset + j * 3 + 0])
+                            ));
+                        break;
+                    case Format.SD01B:
+                        retVal.Add(Color.FromArgb(
+                            _data[offset + j * 3 + 1],
+                            _data[offset + j * 3 + 2],
+                            _data[offset + j * 3 + 0]
+                            ));
+                        break;
+                }
             }
 
             return retVal.AsReadOnly();

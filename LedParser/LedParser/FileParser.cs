@@ -93,10 +93,22 @@ namespace LedParser
             var data = new byte[headerLength + frameLength * frames * 3];
             data[0] = (byte)((frames & 0xFF00) >> 8);
             data[1] = (byte)(frames & 0xFF);
-            data[2] = 0x68;
-            data[3] = 0x03;
-            data[4] = 0x06;
-            data[5] = 0x06;
+            switch(format)
+            {
+                case Format.SD01A:
+                    data[2] = 0x68;
+                    data[3] = 0x03;
+                    data[4] = 0x06;
+                    data[5] = 0x06;
+                    break;
+                case Format.SD01B:
+                    data[2] = 0x98;
+                    data[3] = 0x13;
+                    data[4] = 0x06;
+                    data[5] = 0x14;
+                    break;
+            }
+            
             for (int i = 6; i < headerLength; i++)
                 data[i] = 0x55;
             for (int i = 0; i < frames * frameLength; i++)
